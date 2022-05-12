@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import tw from 'tailwind-styled-components';
 
-function BackButton({ path }) {
+function BackButton({ path = '/' }) {
 	return (
 		<ButtonContainer>
 			<Link href={path}>

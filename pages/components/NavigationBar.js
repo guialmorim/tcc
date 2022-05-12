@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components';
 import Link from 'next/link';
 
-function NavigationBar({ path }) {
+function NavigationBar({ path = '/' }) {
 	return (
 		<ButtonContainer>
 			<Link href={path}>
