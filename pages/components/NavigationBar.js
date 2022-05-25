@@ -1,12 +1,13 @@
 import tw from 'tailwind-styled-components';
 import Link from 'next/link';
 
-function NavigationBar({ path = '/' }) {
+function NavigationBar({ path = '/', OpenCartDrawer }) {
 	return (
 		<ButtonContainer>
 			<Link href={path}>
 				<BackButton src="https://cdn-icons-png.flaticon.com/512/109/109618.png" />
 			</Link>
+			<a onClick={OpenCartDrawer}>carrinho</a>
 		</ButtonContainer>
 	);
 }

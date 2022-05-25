@@ -10,10 +10,12 @@ function ActionButtons() {
 					Ride
 				</ActionButton>
 			</Link>
-			<ActionButton>
-				<ActionButtonImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Circle-icons-bike.svg/2048px-Circle-icons-bike.svg.png" />
-				Wheels
-			</ActionButton>
+			<Link href="/cart">
+				<ActionButton>
+					<ActionButtonImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Circle-icons-bike.svg/2048px-Circle-icons-bike.svg.png" />
+					Cart
+				</ActionButton>
+			</Link>
 			<ActionButton>
 				<ActionButtonImage src="https://www.atepi.com.br/wp-content/uploads/2018/06/calendar-icon-300x300.png" />
 				Reserve
