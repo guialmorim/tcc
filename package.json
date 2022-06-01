@@ -27,6 +27,8 @@
     "nprogress": "^0.2.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-icons": "^4.4.0",
+    "react-map-gl": "^7.0.15",
     "stripe": "^9.1.0",
     "sweetalert2": "^11.4.17",
     "swr": "^1.3.0",

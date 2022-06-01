@@ -6,10 +6,18 @@ import { useShoppingCart } from 'use-shopping-cart';
 import axios from 'axios';
 import { formatCurrency } from '../../lib/utils';
 import getStripe from '../../lib/get-stripe';
+import { AddIcon, MinusIcon, CloseIcon } from '@chakra-ui/icons';
 
 const Cart = () => {
-	const { cartDetails, totalPrice, cartCount, addItem, removeItem, clearCart } =
-		useShoppingCart();
+	const {
+		cartDetails,
+		totalPrice,
+		cartCount,
+		incrementItem,
+		decrementItem,
+		removeItem,
+		clearCart,
+	} = useShoppingCart();
 	const [redirecting, setRedirecting] = useState(false);
 
 	const redirectToCheckout = async () => {
@@ -23,7 +31,7 @@ const Cart = () => {
 				//console.log(product);
 
 				return {
-					price: 'price_1L0ZbkLBxEmBpFh8KEyMVyDT',
+					price: id,
 					quantity,
 				};
 			}),
@@ -37,31 +45,29 @@ const Cart = () => {
 	return (
 		<>
 			<Head>
-				<title>My Shopping Cart</title>
+				<title>Meus Tickets</title>
 			</Head>
 			<div className="container xl:max-w-screen-xl mx-auto py-12 px-6">
 				{cartCount > 0 ? (
 					<>
-						<h2 className="text-4xl font-semibold">Your shopping cart</h2>
+						<h2 className="text-4xl font-semibold">Meus Tickets</h2>
 						<p className="mt-1 text-xl">
-							{cartCount} items{' '}
+							{cartCount} itens{' '}
 							<button
 								onClick={clearCart}
 								className="opacity-50 hover:opacity-100 text-base capitalize"
 							>
-								(Clear all)
+								(Limpar carrinho)
 							</button>
 						</p>
 					</>
 				) : (
 					<>
-						<h2 className="text-4xl font-semibold">
-							Your shopping cart is empty.
-						</h2>
+						<h2 className="text-4xl font-semibold">Seu carrinho está vazio.</h2>
 						<p className="mt-1 text-xl">
-							Check out our awesome plants{' '}
+							Procure um estacionamento perto de você{' '}
 							<Link href="/">
-								<a className="text-red-500 underline">here!</a>
+								<a className="text-red-500 underline">aqui!</a>
 							</Link>
 						</p>
 					</>
@@ -77,14 +83,14 @@ const Cart = () => {
 								{/* Image + Name */}
 								<Link href={`/products/${product.id}`}>
 									<a className="flex items-center space-x-4 group">
-										<div className="relative w-20 h-20 group-hover:scale-110 transition-transform">
+										{/* <div className="relative w-20 h-20 group-hover:scale-110 transition-transform">
 											<Image
 												src={product.image}
 												alt={product.name}
 												layout="fill"
 												objectFit="contain"
 											/>
-										</div>
+										</div> */}
 										<p className="font-semibold text-xl group-hover:underline">
 											{product.name}
 										</p>
@@ -96,32 +102,32 @@ const Cart = () => {
 									{/* Quantity */}
 									<div className="flex items-center space-x-3">
 										<button
-											onClick={() => removeItem(product)}
+											onClick={() => decrementItem(product.id)}
 											disabled={product?.quantity <= 1}
 											className="disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current hover:bg-rose-100 hover:text-rose-500 rounded-md p-1"
 										>
-											Menos
+											<MinusIcon />
 										</button>
 										<p className="font-semibold text-xl">{product.quantity}</p>
 										<button
-											onClick={() => addItem(product)}
+											onClick={() => incrementItem(product.id)}
 											className="hover:bg-green-100 hover:text-green-500 rounded-md p-1"
 										>
-											Mais
+											<AddIcon />
 										</button>
 									</div>
 
 									{/* Price */}
 									<p className="font-semibold text-xl ml-16">
-										X{formatCurrency(product.price)}
+										{formatCurrency(product.price)}
 									</p>
 
 									{/* Remove item */}
 									<button
-										onClick={() => removeItem(product, product.quantity)}
+										onClick={() => removeItem(product.id)}
 										className="ml-4 hover:text-rose-500"
 									>
-										O
+										<CloseIcon />
 									</button>
 								</div>
 							</div>

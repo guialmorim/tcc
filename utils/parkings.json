@@ -1,0 +1,41 @@
+[
+	{
+		"sku": "prod_LhzaCiRrlgYQ0M",
+		"id": "price_1L0ZbkLBxEmBpFh8KEyMVyDT",
+		"name": "Good Park Estacionamento",
+		"image": "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/240px-Above_Gotham.jpg",
+		"state": "New York",
+		"latitude": -23.716112480232724,
+		"longitude": -46.54042443437366,
+		"rating": 2.5,
+		"numReviews": 30,
+		"price": 1500,
+		"currency": "BRL"
+	},
+	{
+		"sku": "prod_LnbyRs0kFT7FEg",
+		"id": "price_1L60kvLBxEmBpFh87RgApq0x",
+		"name": "CR Park Estacionamento",
+		"image": "http://upload.wikimedia.org/wikipedia/commons/thumb/5/57/LA_Skyline_Mountains2.jpg/240px-LA_Skyline_Mountains2.jpg",
+		"state": "California",
+		"latitude": -23.716167786443695,
+		"longitude": -46.54184276480897,
+		"rating": 3.0,
+		"numReviews": 50,
+		"price": 2500,
+		"currency": "BRL"
+	},
+	{
+		"sku": "prod_Lnbz7bXWSmxx7n",
+		"id": "price_1L60l9LBxEmBpFh8kHP5LR6C",
+		"name": "Big Park Estacionamento",
+		"image": "http://upload.wikimedia.org/wikipedia/commons/thumb/8/85/2008-06-10_3000x1000_chicago_skyline.jpg/240px-2008-06-10_3000x1000_chicago_skyline.jpg",
+		"state": "Illinois",
+		"latitude": -23.714438940282502,
+		"longitude": -46.538653063030104,
+		"rating": 4.2,
+		"numReviews": 20,
+		"price": 3500,
+		"currency": "BRL"
+	}
+]

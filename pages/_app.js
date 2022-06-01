@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import '../styles/nprogress.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
 import { useState } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import NProgress from 'nprogress';
@@ -19,7 +20,7 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<ChakraProvider>
-			<CartProvider>
+			<CartProvider currency="BRL">
 				<NavigationBar
 					OpenCartDrawer={() => setIsDrawerCartOpen(!isDrawerCartOpen)}
 				/>

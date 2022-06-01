@@ -92,8 +92,8 @@ const CartSummary = ({ user, selectedAdr }) => {
 	};
 
 	const RemoveItemFromCart = React.useCallback(
-		(sku) => {
-			removeItem(sku);
+		(id) => {
+			removeItem(id);
 			Toast({
 				title: 'Removido',
 				description: 'produto removido do seu carrinho',
@@ -104,6 +104,7 @@ const CartSummary = ({ user, selectedAdr }) => {
 	);
 
 	const allproducts = Object.keys(cartDetails).map((item) => cartDetails[item]);
+	console.log(allproducts);
 
 	return (
 		<form onSubmit={handleCheckout}>
@@ -117,9 +118,7 @@ const CartSummary = ({ user, selectedAdr }) => {
 				Seu Carrinho
 			</Heading>
 
-			{/* This is where we'll render our cart */}
-
-			{loading && <h2>CARREGANDO...</h2>}
+			{loading && <h2>Carregando...</h2>}
 
 			{allproducts.length > 0 ? (
 				<List spacing={3}>
@@ -144,7 +143,7 @@ const CartSummary = ({ user, selectedAdr }) => {
 										color="red.400"
 										position="relative"
 										right="0"
-										onClick={() => RemoveItemFromCart(product.sku)}
+										onClick={() => RemoveItemFromCart(product.id)}
 										mb={2}
 									/>
 								</Box>

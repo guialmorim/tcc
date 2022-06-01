@@ -50,8 +50,8 @@ const DrawerCart = ({ isOpen, onClose }) => {
 	}, [clearCart]);
 
 	const RemoveItemFromCart = React.useCallback(
-		(sku) => {
-			removeItem(sku);
+		(id) => {
+			removeItem(id);
 			Toast({
 				title: 'Removido',
 				description: 'produto removido do seu carrinho',
@@ -105,7 +105,7 @@ const DrawerCart = ({ isOpen, onClose }) => {
 														color="red.400"
 														position="relative"
 														right="0"
-														onClick={() => RemoveItemFromCart(product.sku)}
+														onClick={() => RemoveItemFromCart(product.id)}
 														mb={2}
 													/>
 												</Box>
