@@ -110,25 +110,19 @@ function PopUp({ onClosePopup, parking }) {
 						></Box>
 					</Flex>
 
-					<Flex
-						justifyContent="space-between"
-						alignContent="center"
-						// border={1}
-						// borderStyle="solid"
-						// borderColor="red"
-						py={2}
-					>
+					<Flex justifyContent="space-between" alignContent="center" py={2}>
 						{/* <Rating rating={parking.rating} numReviews={parking.numReviews} /> */}
 						<Button
 							size="xs"
-							colorScheme="teal"
+							colorScheme="purple"
 							rightIcon={<ArrowForwardIcon />}
+							variant="outline"
 						>
 							Ir para
 						</Button>
 						<Button
 							size="xs"
-							colorScheme="blue"
+							colorScheme="purple"
 							rightIcon={<AddIcon />}
 							onClick={handleOnAddToCart}
 						>

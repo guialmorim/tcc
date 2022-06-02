@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import Head from 'next/head';
 import { useShoppingCart } from 'use-shopping-cart';
 import axios from 'axios';
@@ -43,7 +42,7 @@ const Cart = () => {
 	};
 
 	return (
-		<>
+		<div className="h-screen">
 			<Head>
 				<title>Meus Tickets</title>
 			</Head>
@@ -152,7 +151,7 @@ const Cart = () => {
 					</div>
 				) : null}
 			</div>
-		</>
+		</div>
 	);
 };
 

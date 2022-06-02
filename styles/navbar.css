@@ -1,0 +1,73 @@
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+:root {
+	--c-grey-000: #fff;
+	--c-grey-100: #f7f5ff;
+	--c-grey-500: #ddd;
+	--c-grey-700: #7d7d80;
+	--c-grey-900: #000;
+	--c-purple-100: #cac2f2;
+	--c-purple-300: #9684fe;
+	--c-purple-500: #7762ff;
+	--inner-gutter: 1.25rem;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+* {
+	scrollbar-width: none;
+}
+
+.app-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 99;
+}
+.menu-bar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 24px 24px 0 0;
+	background-color: #fff;
+	box-shadow: 0 -5px 15px rgba(150, 132, 254, 0.15);
+}
+.menu-bar-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: var(--c-purple-100);
+	text-decoration: none;
+	margin: 1rem 1.25rem;
+}
+.menu-bar-item > * {
+	transition: 0.15s ease;
+}
+.menu-bar-item svg {
+	width: 32px;
+	height: 32px;
+}
+.menu-bar-item--active,
+.menu-bar-item:hover {
+	color: var(--c-purple-500);
+}
+.menu-bar-item-text {
+	font-size: 0.875rem;
+	display: block;
+	margin-top: 0.25rem;
+}

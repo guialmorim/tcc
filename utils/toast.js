@@ -2,12 +2,10 @@ import { createStandaloneToast } from '@chakra-ui/react';
 
 const { toast } = createStandaloneToast();
 
-export const Toast = (props) => {
+export const Toast = ({ isClosable = true, duration = 1500, ...rest }) => {
 	toast({
-		title: props.title,
-		description: props.description,
-		status: props.status,
-		duration: 1500,
-		isClosable: true,
+		isClosable,
+		duration,
+		...rest,
 	});
 };

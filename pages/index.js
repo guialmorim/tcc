@@ -1,19 +1,78 @@
 import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Map from './components/Map';
-import Header from './components/Header';
-import ActionButtons from './components/ActionButtons';
-import InputButton from './components/InputButton';
+import NoGeolocation from './components/NoGeolocation';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useRouter } from 'next/router';
-import products from '../products';
-import ProductCard from './components/ProductCard';
+import { Toast } from '../utils/toast';
 
 export default function Home() {
 	const [user, setUser] = useState(null);
 	const router = useRouter();
 	const [disabled, setDisabled] = useState(false);
+	const [error, setError] = useState(null);
+	const [userLocation, setUserLocation] = useState({
+		latitude: null,
+		longitude: null,
+	});
+
+	function showError(error) {
+		let errorMessage = '';
+		switch (error.code) {
+			case error.PERMISSION_DENIED:
+				errorMessage =
+					'Usuário negou a solicitação de acesso à geolocalização.';
+				break;
+			case error.POSITION_UNAVAILABLE:
+				errorMessage = 'Informações de geolocalização indisponíveis.';
+				break;
+			case error.TIMEOUT:
+				errorMessage = 'Tempo limite esgotado para acessar a geolocalização.';
+				break;
+			case error.UNKNOWN_ERROR:
+				errorMessage = 'Um erro inesperado ocorreu.';
+				break;
+		}
+		console.warn(errorMessage);
+
+		//setError(error);
+
+		// Toast({
+		// 	title: `Ops! ${error.message}`,
+		// 	description: errorMessage,
+		// 	status: 'error',
+		// 	duration: 1000 * 60 * 60, // 1 Hour
+		// });
+	}
+
+	function checkGeolocation() {
+		if (navigator.geolocation) {
+			console.log('chequei');
+			console.log('1', userLocation);
+			console.log('1', navigator.geolocation);
+			navigator.geolocation.getCurrentPosition(
+				(position) =>
+					setUserLocation({
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+					}),
+				(error) => showError(error)
+			);
+			navigator.geolocation.watchPosition(
+				(position) =>
+					setUserLocation({
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+					}),
+				(error) => showError(error)
+			);
+			console.log('2', userLocation);
+			console.log('2', navigator.geolocation);
+		} else {
+			console.warn('NO NAVIGATOR');
+		}
+	}
 
 	useEffect(() => {
 		return onAuthStateChanged(auth, (user) => {
@@ -29,28 +88,17 @@ export default function Home() {
 		});
 	}, [router]);
 
+	useEffect(() => {
+		checkGeolocation();
+	}, [userLocation]);
+
 	return (
 		<Wrapper>
-			<Map />
-			{/* <ActionItems>
-				<Header user={user} />
-				<ActionButtons />
-				<InputButton />
-			</ActionItems> */}
-
-			{/* <div className="container xl:max-w-screen-xl mx-auto py-12 px-6">
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-					{products.map((product) => (
-						<ProductCard
-							key={product.id}
-							disabled={disabled}
-							onClickAdd={() => setDisabled(true)}
-							onAddEnded={() => setDisabled(false)}
-							{...product}
-						/>
-					))}
-				</div>
-			</div> */}
+			{userLocation.latitude && userLocation.longitude ? (
+				<Map userLocation={userLocation} />
+			) : (
+				<NoGeolocation error={error} checkGeolocation={checkGeolocation} />
+			)}
 		</Wrapper>
 	);
 }
