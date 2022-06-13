@@ -32,7 +32,7 @@
 }
 
 .app-footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	left: 0;
 	width: 100%;
@@ -58,7 +58,8 @@
 .menu-bar-item > * {
 	transition: 0.15s ease;
 }
-.menu-bar-item svg {
+.menu-bar-item svg,
+.menu-bar-item img {
 	width: 32px;
 	height: 32px;
 }

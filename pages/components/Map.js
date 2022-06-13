@@ -58,7 +58,7 @@ function Map({ userLocation }) {
 					left="50%"
 					transform="translate(-50%, -50%)"
 				>
-					<CircularProgress isIndeterminate color="blue.500" />
+					<CircularProgress isIndeterminate color="purple.500" />
 				</Box>
 				<Skeleton flex={1} h="100%" startColor="gray.100" endColor="gray.300" />
 			</Box>

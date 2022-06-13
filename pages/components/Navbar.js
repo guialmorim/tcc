@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { GiTicket } from 'react-icons/gi';
 
 function Navbar({ OpenCartDrawer }) {
 	return (
@@ -26,39 +27,12 @@ function Navbar({ OpenCartDrawer }) {
 						<span className="menu-bar-item-text">Home</span>
 					</a>
 				</Link>
-				<a href="#" className="menu-bar-item">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="192"
-						height="192"
-						fill="currentColor"
-						viewBox="0 0 256 256"
-					>
-						<rect width="256" height="256" fill="none"></rect>
-						<circle
-							cx="116"
-							cy="116"
-							r="84"
-							fill="none"
-							stroke="currentColor"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth="16"
-						></circle>
-						<line
-							x1="175.39356"
-							y1="175.40039"
-							x2="223.99414"
-							y2="224.00098"
-							fill="none"
-							stroke="currentColor"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth="16"
-						></line>
-					</svg>
-					<span className="menu-bar-item-text">Procurar</span>
-				</a>
+				<Link href="/tickets">
+					<a className="menu-bar-item">
+						<GiTicket />
+						<span className="menu-bar-item-text">Tickets</span>
+					</a>
+				</Link>
 				<a onClick={OpenCartDrawer} className="menu-bar-item">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

@@ -4,7 +4,7 @@ import '../styles/navbar.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useState } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 import NProgress from 'nprogress';
 import Router, { useRouter } from 'next/router';
 
@@ -23,14 +23,14 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<ChakraProvider>
 			<CartProvider currency="BRL">
-				<Navbar
-					pathname={pathname}
-					OpenCartDrawer={() => setIsDrawerCartOpen(!isDrawerCartOpen)}
-				/>
-				<Component {...pageProps} />
 				<DrawerCart
 					isOpen={isDrawerCartOpen}
 					onClose={() => setIsDrawerCartOpen(false)}
+				/>
+				<Component {...pageProps} />
+				<Navbar
+					pathname={pathname}
+					OpenCartDrawer={() => setIsDrawerCartOpen(!isDrawerCartOpen)}
 				/>
 			</CartProvider>
 		</ChakraProvider>

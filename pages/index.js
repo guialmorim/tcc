@@ -10,7 +10,6 @@ import { Toast } from '../utils/toast';
 export default function Home() {
 	const [user, setUser] = useState(null);
 	const router = useRouter();
-	const [disabled, setDisabled] = useState(false);
 	const [error, setError] = useState(null);
 	const [userLocation, setUserLocation] = useState({
 		latitude: null,
@@ -48,9 +47,6 @@ export default function Home() {
 
 	function checkGeolocation() {
 		if (navigator.geolocation) {
-			console.log('chequei');
-			console.log('1', userLocation);
-			console.log('1', navigator.geolocation);
 			navigator.geolocation.getCurrentPosition(
 				(position) =>
 					setUserLocation({
@@ -67,8 +63,6 @@ export default function Home() {
 					}),
 				(error) => showError(error)
 			);
-			console.log('2', userLocation);
-			console.log('2', navigator.geolocation);
 		} else {
 			console.warn('NO NAVIGATOR');
 		}
@@ -105,9 +99,4 @@ export default function Home() {
 
 const Wrapper = tw.div`
   flex flex-col bg-gray-100 h-screen
-`;
-
-const ActionItems = tw.div`
-  flex-1
-  p-4
 `;

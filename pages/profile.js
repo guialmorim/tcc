@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
 	Heading,
 	Avatar,
@@ -6,18 +7,35 @@ import {
 	Text,
 	Stack,
 	Button,
-	Link,
+	CircularProgress,
 	Badge,
-	useColorModeValue,
 } from '@chakra-ui/react';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useRouter } from 'next/router';
 
 export default function SocialProfileSimple() {
-	return (
-		<Center py={6} h="100vh">
+	const [user, setUser] = useState(null);
+	const router = useRouter();
+
+	useEffect(() => {
+		return onAuthStateChanged(auth, (user) => {
+			if (user) {
+				setUser(user);
+			} else {
+				setUser(null);
+				router.push('/login');
+			}
+		});
+	}, [router]);
+
+	console.log(user);
+
+	return user ? (
+		<Center py={6}>
 			<Box
 				maxW={'320px'}
 				w={'full'}
-				bg={useColorModeValue('white', 'gray.900')}
 				boxShadow={'2xl'}
 				rounded={'lg'}
 				p={6}
@@ -25,9 +43,7 @@ export default function SocialProfileSimple() {
 			>
 				<Avatar
 					size={'xl'}
-					src={
-						'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-					}
+					src={user.photoURL}
 					alt={'Avatar Alt'}
 					mb={4}
 					pos={'relative'}
@@ -44,66 +60,35 @@ export default function SocialProfileSimple() {
 					}}
 				/>
 				<Heading fontSize={'2xl'} fontFamily={'body'}>
-					Lindsey James
+					{user.displayName}
 				</Heading>
 				<Text fontWeight={600} color={'gray.500'} mb={4}>
-					@lindsey_jam3s
+					{user.email}
 				</Text>
-				<Text
-					textAlign={'center'}
-					color={useColorModeValue('gray.700', 'gray.400')}
-					px={3}
-				>
-					Actress, musician, songwriter and artist. PM for work inquires or{' '}
-					<Link href={'#'} color={'blue.400'}>
-						#tag
-					</Link>{' '}
-					me in your posts
+				<Text textAlign={'center'} px={3}>
+					Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+					nonumy eirmod tempor.
 				</Text>
 
 				<Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
-					<Badge
-						px={2}
-						py={1}
-						bg={useColorModeValue('gray.50', 'gray.800')}
-						fontWeight={'400'}
-					>
-						#art
+					<Badge px={2} py={1} fontWeight={'400'}>
+						#easy
 					</Badge>
-					<Badge
-						px={2}
-						py={1}
-						bg={useColorModeValue('gray.50', 'gray.800')}
-						fontWeight={'400'}
-					>
-						#photography
+					<Badge px={2} py={1} fontWeight={'400'}>
+						#cars
 					</Badge>
-					<Badge
-						px={2}
-						py={1}
-						bg={useColorModeValue('gray.50', 'gray.800')}
-						fontWeight={'400'}
-					>
-						#music
+					<Badge px={2} py={1} fontWeight={'400'}>
+						#parking
 					</Badge>
 				</Stack>
 
 				<Stack mt={8} direction={'row'} spacing={4}>
 					<Button
+						onClick={signOut}
 						flex={1}
 						fontSize={'sm'}
 						rounded={'full'}
-						_focus={{
-							bg: 'gray.200',
-						}}
-					>
-						Message
-					</Button>
-					<Button
-						flex={1}
-						fontSize={'sm'}
-						rounded={'full'}
-						bg={'blue.400'}
+						bg={'red.400'}
 						color={'white'}
 						boxShadow={
 							'0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
@@ -115,10 +100,21 @@ export default function SocialProfileSimple() {
 							bg: 'blue.500',
 						}}
 					>
-						Follow
+						Sair
 					</Button>
 				</Stack>
 			</Box>
 		</Center>
+	) : (
+		<Box h="100vh" flex={1} bg="white">
+			<Box
+				position="absolute"
+				top="50%"
+				left="50%"
+				transform="translate(-50%, -50%)"
+			>
+				<CircularProgress isIndeterminate color="purple.500" />
+			</Box>
+		</Box>
 	);
 }
