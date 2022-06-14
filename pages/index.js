@@ -2,14 +2,9 @@ import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import Map from './components/Map';
 import NoGeolocation from './components/NoGeolocation';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../firebase';
-import { useRouter } from 'next/router';
-import { Toast } from '../utils/toast';
+//import { Toast } from '../utils/toast';
 
 export default function Home() {
-	const [user, setUser] = useState(null);
-	const router = useRouter();
 	const [error, setError] = useState(null);
 	const [userLocation, setUserLocation] = useState({
 		latitude: null,
@@ -67,20 +62,6 @@ export default function Home() {
 			console.warn('NO NAVIGATOR');
 		}
 	}
-
-	useEffect(() => {
-		return onAuthStateChanged(auth, (user) => {
-			if (user) {
-				setUser({
-					name: user.displayName,
-					photoUrl: user.photoURL,
-				});
-			} else {
-				setUser(null);
-				router.push('/login');
-			}
-		});
-	}, [router]);
 
 	useEffect(() => {
 		checkGeolocation();

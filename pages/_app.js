@@ -11,6 +11,7 @@ import Router, { useRouter } from 'next/router';
 import CartProvider from '../pages/components/CartProvider';
 import DrawerCart from '../pages/components/DrawerCart';
 import Navbar from '../pages/components/Navbar';
+import { UserAuthContextProvider } from '../contexts/UserAuthContext';
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
@@ -20,18 +21,24 @@ function MyApp({ Component, pageProps }) {
 	const { pathname } = useRouter();
 	const [isDrawerCartOpen, setIsDrawerCartOpen] = useState(false);
 
+	const isLoginPage = pathname === '/login';
+
 	return (
 		<ChakraProvider>
 			<CartProvider currency="BRL">
-				<DrawerCart
-					isOpen={isDrawerCartOpen}
-					onClose={() => setIsDrawerCartOpen(false)}
-				/>
-				<Component {...pageProps} />
-				<Navbar
-					pathname={pathname}
-					OpenCartDrawer={() => setIsDrawerCartOpen(!isDrawerCartOpen)}
-				/>
+				<UserAuthContextProvider>
+					<DrawerCart
+						isOpen={isDrawerCartOpen}
+						onClose={() => setIsDrawerCartOpen(false)}
+					/>
+					<Component {...pageProps} />
+					{!isLoginPage && (
+						<Navbar
+							pathname={pathname}
+							OpenCartDrawer={() => setIsDrawerCartOpen(!isDrawerCartOpen)}
+						/>
+					)}
+				</UserAuthContextProvider>
 			</CartProvider>
 		</ChakraProvider>
 	);

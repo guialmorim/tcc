@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import { toast } from 'react-hot-toast';
 import { useShoppingCart } from 'use-shopping-cart';
 import Image from 'next/image';
 import Head from 'next/head';

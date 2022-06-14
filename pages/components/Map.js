@@ -18,7 +18,7 @@ function Map({ userLocation }) {
 	const [viewport, setViewport] = useState({ latitude: null, longitude: null });
 
 	useEffect(() => {
-		console.log(userLocation);
+		//console.log(userLocation);
 		navigator.geolocation.getCurrentPosition(
 			(pos) => {
 				setViewport({

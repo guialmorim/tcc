@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
 import {
 	Heading,
 	Avatar,
@@ -10,29 +10,16 @@ import {
 	CircularProgress,
 	Badge,
 } from '@chakra-ui/react';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from '../firebase';
-import { useRouter } from 'next/router';
+import { useUserAuth } from '../contexts/UserAuthContext';
 
 export default function SocialProfileSimple() {
-	const [user, setUser] = useState(null);
-	const router = useRouter();
-
-	useEffect(() => {
-		return onAuthStateChanged(auth, (user) => {
-			if (user) {
-				setUser(user);
-			} else {
-				setUser(null);
-				router.push('/login');
-			}
-		});
-	}, [router]);
-
-	console.log(user);
+	const { user, signOut } = useUserAuth();
 
 	return user ? (
 		<Center py={6}>
+			<Head>
+				<title>Meu Perfil</title>
+			</Head>
 			<Box
 				maxW={'320px'}
 				w={'full'}

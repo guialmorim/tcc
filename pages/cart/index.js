@@ -5,7 +5,17 @@ import { useShoppingCart } from 'use-shopping-cart';
 import axios from 'axios';
 import { formatCurrency } from '../../lib/utils';
 import getStripe from '../../lib/get-stripe';
-import { AddIcon, MinusIcon, CloseIcon } from '@chakra-ui/icons';
+import { AddIcon, MinusIcon, DeleteIcon } from '@chakra-ui/icons';
+import { WarningTwoIcon } from '@chakra-ui/icons';
+import {
+	Button,
+	Flex,
+	IconButton,
+	Stack,
+	Box,
+	Heading,
+	Text,
+} from '@chakra-ui/react';
 
 const Cart = () => {
 	const {
@@ -41,15 +51,70 @@ const Cart = () => {
 		await stripe.redirectToCheckout({ sessionId: id });
 	};
 
+	const PackageTier = ({ product }) => {
+		return (
+			<Stack
+				p={3}
+				justifyContent={{
+					base: 'flex-start',
+					md: 'space-around',
+				}}
+				direction={{
+					base: 'column',
+					md: 'row',
+				}}
+				alignItems={{ md: 'center' }}
+			>
+				<Heading fontSize={23}>{product.name}</Heading>
+
+				{/* Price + Actions */}
+				<Flex alignItems="center" justifyContent="space-between">
+					{/* Quantity */}
+					<Flex alignItems="center" justifyContent="space-between">
+						<IconButton
+							onClick={() => decrementItem(product.id)}
+							disabled={product?.quantity <= 1}
+							variant="outline"
+							colorScheme="yellow"
+							fontSize="10px"
+							icon={<MinusIcon />}
+						/>
+
+						<Text mx={2}>{product.quantity}</Text>
+
+						<IconButton
+							onClick={() => incrementItem(product.id)}
+							variant="outline"
+							colorScheme="green"
+							icon={<AddIcon />}
+						/>
+					</Flex>
+
+					{/* Price */}
+					<Text>{formatCurrency(product.price)}</Text>
+
+					{/* Remove item */}
+					<Button
+						colorScheme="red"
+						variant="outline"
+						onClick={() => removeItem(product.id)}
+					>
+						<DeleteIcon />
+					</Button>
+				</Flex>
+			</Stack>
+		);
+	};
+
 	return (
-		<div className="h-screen">
+		<div className="w-screen h-screen">
 			<Head>
-				<title>Meus Tickets</title>
+				<title>Meu Carrinho</title>
 			</Head>
-			<div className="container xl:max-w-screen-xl mx-auto py-12 px-6">
+			<div className="mx-auto py-12 px-6">
 				{cartCount > 0 ? (
 					<>
-						<h2 className="text-4xl font-semibold">Meus Tickets</h2>
+						<h2 className="text-4xl font-semibold">Meu Carrinho</h2>
 						<p className="mt-1 text-xl">
 							{cartCount} itens{' '}
 							<button
@@ -61,94 +126,38 @@ const Cart = () => {
 						</p>
 					</>
 				) : (
-					<>
-						<h2 className="text-4xl font-semibold">Seu carrinho está vazio.</h2>
-						<p className="mt-1 text-xl">
+					<Box textAlign="center" py={10} px={6}>
+						<WarningTwoIcon boxSize={'50px'} color={'orange.300'} />
+						<Heading as="h2" size="xl" mt={6} mb={2}>
+							Seu carrinho está vazio.
+						</Heading>
+						<Text color={'gray.500'}>
 							Procure um estacionamento perto de você{' '}
 							<Link href="/">
 								<a className="text-red-500 underline">aqui!</a>
 							</Link>
-						</p>
-					</>
+						</Text>
+					</Box>
 				)}
 
 				{cartCount > 0 ? (
-					<div className="mt-12">
+					<Box mt={12}>
 						{Object.entries(cartDetails).map(([key, product]) => (
-							<div
-								key={key}
-								className="flex justify-between space-x-4 hover:shadow-lg hover:border-opacity-50 border border-opacity-0 rounded-md p-4"
-							>
-								{/* Image + Name */}
-								<Link href={`/products/${product.id}`}>
-									<a className="flex items-center space-x-4 group">
-										{/* <div className="relative w-20 h-20 group-hover:scale-110 transition-transform">
-											<Image
-												src={product.image}
-												alt={product.name}
-												layout="fill"
-												objectFit="contain"
-											/>
-										</div> */}
-										<p className="font-semibold text-xl group-hover:underline">
-											{product.name}
-										</p>
-									</a>
-								</Link>
-
-								{/* Price + Actions */}
-								<div className="flex items-center">
-									{/* Quantity */}
-									<div className="flex items-center space-x-3">
-										<button
-											onClick={() => decrementItem(product.id)}
-											disabled={product?.quantity <= 1}
-											className="disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-current hover:bg-rose-100 hover:text-rose-500 rounded-md p-1"
-										>
-											<MinusIcon />
-										</button>
-										<p className="font-semibold text-xl">{product.quantity}</p>
-										<button
-											onClick={() => incrementItem(product.id)}
-											className="hover:bg-green-100 hover:text-green-500 rounded-md p-1"
-										>
-											<AddIcon />
-										</button>
-									</div>
-
-									{/* Price */}
-									<p className="font-semibold text-xl ml-16">
-										{formatCurrency(product.price)}
-									</p>
-
-									{/* Remove item */}
-									<button
-										onClick={() => removeItem(product.id)}
-										className="ml-4 hover:text-rose-500"
-									>
-										<CloseIcon />
-									</button>
-								</div>
-							</div>
+							<PackageTier key={key} product={product} />
 						))}
 
-						<div className="flex flex-col items-end border-t py-4 mt-8">
-							<p className="text-xl">
-								Total:{' '}
-								<span className="font-semibold">
-									{formatCurrency(totalPrice)}
-								</span>
-							</p>
+						<div className="flex flex-row items-center justify-between border-t py-4 mt-8">
+							<Heading size={'sm'}>{formatCurrency(totalPrice)}</Heading>
 
-							<button
+							<Button
 								onClick={redirectToCheckout}
 								disabled={redirecting}
-								className="border rounded py-2 px-6 bg-rose-500 hover:bg-rose-600 border-rose-500 hover:border-rose-600 focus:ring-4 focus:ring-opacity-50 focus:ring-rose-500 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-rose-500 max-w-max mt-4"
+								colorScheme="purple"
 							>
-								{redirecting ? 'Redirecting...' : 'Go to Checkout'}
-							</button>
+								{redirecting ? 'Redirecionando...' : 'Confirmar Compra'}
+							</Button>
 						</div>
-					</div>
+					</Box>
 				) : null}
 			</div>
 		</div>
