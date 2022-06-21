@@ -10,16 +10,18 @@ import {
 	SimpleGrid,
 	Heading,
 	Text,
+	Button,
 } from '@chakra-ui/react';
-import { WarningTwoIcon } from '@chakra-ui/icons';
+import { WarningTwoIcon, RepeatClockIcon } from '@chakra-ui/icons';
 import { fetcher } from '../lib/utils';
 import QRCode from 'react-qr-code';
+import { useUserAuth } from '../contexts/UserAuthContext';
 
 function Ticket(props) {
 	const { createdAt, expirationDate, paymentId, _id } = props;
-	console.log(_id);
 	return (
 		<Flex
+			key={_id}
 			boxShadow={'lg'}
 			maxW={'640px'}
 			direction={{ base: 'column-reverse', md: 'row' }}
@@ -34,7 +36,7 @@ function Ticket(props) {
 				textAlign={'left'}
 				justifyContent={'space-between'}
 			>
-				<chakra.p fontWeight={'medium'} fontSize={'15px'} pb={4} pt={2}>
+				<chakra.p fontWeight={'medium'} fontSize={'10px'} pb={4} pt={2}>
 					{paymentId}
 				</chakra.p>
 				<chakra.p fontWeight={'bold'} fontSize={14}>
@@ -50,32 +52,35 @@ function Ticket(props) {
 					</chakra.span>
 				</chakra.p>
 			</Flex>
-			<QRCode value={_id} />
+			<QRCode value={paymentId} />
 		</Flex>
 	);
 }
 
 export default function TicketsGrid() {
+	const { user } = useUserAuth();
 	const [tickets, setTickets] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const endpoint = 'http://localhost:3000/api/tickets';
-		fetcher(endpoint)
-			.then(({ success, data, error }) => {
-				if (success) {
-					console.log(data);
-					setTickets(data);
-				} else {
+		if (user) {
+			const endpoint = `http://localhost:3000/api/tickets/${user.email}`;
+			fetcher(endpoint)
+				.then(({ success, data, error }) => {
+					if (success) {
+						//console.log('data', data);
+						setTickets(data);
+					} else {
+						console.log('error', error);
+					}
+					setLoading(false);
+				})
+				.catch((error) => {
 					console.log(error);
-				}
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.log(error);
-				setLoading(false);
-			});
-	}, []);
+					setLoading(false);
+				});
+		}
+	}, [user]);
 
 	return loading ? (
 		<Container>
@@ -85,7 +90,7 @@ export default function TicketsGrid() {
 			</Box>
 		</Container>
 	) : tickets && tickets.length > 0 ? (
-		<Container h="100%">
+		<Container>
 			<Flex
 				textAlign={'center'}
 				my={10}
@@ -98,7 +103,12 @@ export default function TicketsGrid() {
 						Meus Tickets
 					</chakra.h1>
 				</Box>
-				<SimpleGrid columns={{ base: 1, xl: 2 }} spacing={'7'} mx={'auto'}>
+				<SimpleGrid
+					columns={{ base: 1, xl: 2 }}
+					spacing={'7'}
+					mx={'auto'}
+					mb={'var(--navigation-bar-height)'}
+				>
 					{tickets.map((ticket, index) => (
 						<Ticket key={index} {...ticket} index={index} />
 					))}
@@ -115,9 +125,19 @@ export default function TicketsGrid() {
 				<Text color={'gray.500'}>
 					Encontre um estacionamento perto de você e compre um ticket{' '}
 					<Link href="/">
-						<a className="text-primary">aqui!</a>
+						<a className="text-purple-400 hover:text-purple-300">aqui!</a>
 					</Link>
 				</Text>
+				<Button
+					my={2}
+					rightIcon={<RepeatClockIcon />}
+					colorScheme="purple"
+					variant="outline"
+					size="sm"
+					onClick={() => window.location.reload()}
+				>
+					Recarregar
+				</Button>
 			</Box>
 		</Container>
 	);

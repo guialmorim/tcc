@@ -23,6 +23,7 @@
 	--c-purple-300: #9684fe;
 	--c-purple-500: #7762ff;
 	--inner-gutter: 1.25rem;
+	--navigation-bar-height: 5.5rem;
 }
 ::-webkit-scrollbar {
 	display: none;
@@ -37,6 +38,7 @@
 	left: 0;
 	width: 100%;
 	z-index: 99;
+	height: var(--navigation-bar-height);
 }
 .menu-bar {
 	display: flex;

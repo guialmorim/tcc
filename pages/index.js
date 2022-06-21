@@ -61,6 +61,8 @@ export default function Home() {
 		} else {
 			console.warn('NO NAVIGATOR');
 		}
+
+		console.log(userLocation);
 	}
 
 	useEffect(() => {

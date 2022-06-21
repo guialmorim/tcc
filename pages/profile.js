@@ -15,6 +15,8 @@ import { useUserAuth } from '../contexts/UserAuthContext';
 export default function SocialProfileSimple() {
 	const { user, signOut } = useUserAuth();
 
+	console.log(user);
+
 	return user ? (
 		<Center py={6}>
 			<Head>

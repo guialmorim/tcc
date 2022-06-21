@@ -51,7 +51,6 @@ export const UserAuthContextProvider = ({ children }) => {
 		return onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUser(user);
-				console.log(user);
 			} else {
 				setUser(null);
 				router.push('/login');

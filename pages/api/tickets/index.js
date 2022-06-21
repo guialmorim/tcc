@@ -4,8 +4,7 @@ import dbConnection from '../../../services/dbConnection';
 dbConnection();
 
 export default async function handler(req, res) {
-	const { method } = req;
-	console.log(method);
+	const { method, body } = req;
 	switch (method) {
 		case 'GET':
 			try {
@@ -19,9 +18,11 @@ export default async function handler(req, res) {
 
 		case 'POST':
 			try {
+				const { paymentId, userId } = body;
+
 				const ticket = {
-					paymentId: 'paymentId_test',
-					userId: 'userId_test',
+					paymentId,
+					userId,
 				}; // new Ticket
 
 				Ticket.create(ticket, function (error, newTicket) {
