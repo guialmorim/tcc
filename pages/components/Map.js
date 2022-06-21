@@ -8,7 +8,7 @@ import MapGl, {
 	GeolocateControl,
 } from 'react-map-gl';
 import { Skeleton, Box, CircularProgress } from '@chakra-ui/react';
-import Pin from './pin';
+import Pin from './Pin';
 import PopUp from './PopUp';
 
 import PARKINGS from '../../utils/parkings.json';
