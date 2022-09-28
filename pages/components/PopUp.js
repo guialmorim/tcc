@@ -43,6 +43,19 @@ function Rating({ rating, numReviews }) {
 	);
 }
 
+const configAddressName = (address = '') => address.replaceAll(' ', '+');
+
+function generateGoogleMapsDeepLink(address) {
+	const GOOGLE_MAPS_SEARCH_URL =
+		'https://www.google.com/maps/search/?api=1&query=';
+
+	const configuredGoogleMapsSearchUrl = `${GOOGLE_MAPS_SEARCH_URL}${configAddressName(
+		address
+	)}`;
+
+	return configuredGoogleMapsSearchUrl;
+}
+
 function PopUp({ onClosePopup, parking }) {
 	const { addItem } = useShoppingCart();
 
@@ -113,10 +126,13 @@ function PopUp({ onClosePopup, parking }) {
 					<Flex justifyContent="space-between" alignContent="center" py={2}>
 						{/* <Rating rating={parking.rating} numReviews={parking.numReviews} /> */}
 						<Button
+							as="a"
 							size="xs"
 							colorScheme="purple"
 							rightIcon={<ArrowForwardIcon />}
 							variant="outline"
+							target="_blank"
+							href={generateGoogleMapsDeepLink(parking.address)}
 						>
 							Ir para
 						</Button>

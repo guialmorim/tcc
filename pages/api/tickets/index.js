@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 	switch (method) {
 		case 'GET':
 			try {
-				const tickets = await Ticket.find({});
+				const tickets = await Ticket.find();
 				res.status(200).json({ success: true, data: tickets });
 			} catch (error) {
 				console.error(error);

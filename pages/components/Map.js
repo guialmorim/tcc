@@ -18,16 +18,11 @@ function Map({ userLocation }) {
 	const [viewport, setViewport] = useState({ latitude: null, longitude: null });
 
 	useEffect(() => {
-		//console.log(userLocation);
-		navigator.geolocation.getCurrentPosition(
-			(pos) => {
-				setViewport({
-					latitude: pos.coords.latitude,
-					longitude: pos.coords.longitude,
-				});
-			},
-			(error) => console.error(error)
-		);
+		console.log('userLocation', userLocation);
+		setViewport({
+			latitude: userLocation.latitude,
+			longitude: userLocation.longitude,
+		});
 	}, [userLocation]);
 
 	const pins = useMemo(

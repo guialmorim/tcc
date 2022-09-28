@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import useSWR from 'swr';
 import { useShoppingCart } from 'use-shopping-cart';
 import { fetcher } from '../lib/utils';
@@ -86,9 +87,16 @@ const Success = () => {
 				<Box textAlign="center" py={10} px={6}>
 					<CheckCircleIcon boxSize={'50px'} color={'green.500'} />
 					<Heading as="h2" size="xl" mt={6} mb={2}>
-						Thanks for your order!
+						Obrigado pelo seu pedido!
 					</Heading>
-					<Text color={'gray.500'}>Check your inbox for the receipt.</Text>
+					<Text color={'gray.500'}>
+						Cheque seu inbox para visualizar o recibo.
+					</Text>
+					<Text color={'blue.400'} as="u">
+						<Link href="/">
+							<a>Voltar para o início</a>
+						</Link>
+					</Text>
 				</Box>
 			)}
 		</div>

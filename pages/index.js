@@ -6,10 +6,45 @@ import NoGeolocation from './components/NoGeolocation';
 
 export default function Home() {
 	const [error, setError] = useState(null);
+	//const [loading, setLoading] = useState(false);
 	const [userLocation, setUserLocation] = useState({
 		latitude: null,
 		longitude: null,
 	});
+
+	const TIMEOUT_TO_GET_USER_POSITION = 60000;
+
+	function checkGeolocation() {
+		//setLoading(true);
+		if (navigator.geolocation) {
+			//console.log('aaaaaa passei');
+			navigator.geolocation.watchPosition(
+				(position) => {
+					//console.log(position);
+					setUserLocation({
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+					});
+					//setLoading(false);
+				},
+				(error) => {
+					showError(error);
+					//setLoading(false);
+				},
+				{
+					maximumAge: Infinity,
+					timeout: TIMEOUT_TO_GET_USER_POSITION,
+					enableHighAccuracy: false,
+				}
+			);
+		} else {
+			console.warn('NO NAVIGATOR');
+		}
+
+		//console.log(userLocation);
+	}
+
+	//setInterval(checkGeolocation, TIMEOUT_TO_GET_USER_POSITION);
 
 	function showError(error) {
 		let errorMessage = '';
@@ -30,7 +65,7 @@ export default function Home() {
 		}
 		console.warn(errorMessage);
 
-		//setError(error);
+		setError(error);
 
 		// Toast({
 		// 	title: `Ops! ${error.message}`,
@@ -40,34 +75,9 @@ export default function Home() {
 		// });
 	}
 
-	function checkGeolocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				(position) =>
-					setUserLocation({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					}),
-				(error) => showError(error)
-			);
-			navigator.geolocation.watchPosition(
-				(position) =>
-					setUserLocation({
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-					}),
-				(error) => showError(error)
-			);
-		} else {
-			console.warn('NO NAVIGATOR');
-		}
-
-		console.log(userLocation);
-	}
-
 	useEffect(() => {
 		checkGeolocation();
-	}, [userLocation]);
+	}, []);
 
 	return (
 		<Wrapper>

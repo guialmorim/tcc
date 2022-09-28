@@ -23,18 +23,19 @@ function Ticket(props) {
 		<Flex
 			key={_id}
 			boxShadow={'lg'}
-			maxW={'640px'}
-			direction={{ base: 'column-reverse', md: 'row' }}
 			width={'full'}
+			direction={'column-reverse'}
 			rounded={'xl'}
 			p={10}
 			justifyContent={'space-between'}
 			position={'relative'}
+			margin="auto"
 		>
 			<Flex
 				direction={'column'}
 				textAlign={'left'}
 				justifyContent={'space-between'}
+				flex="1"
 			>
 				<chakra.p fontWeight={'medium'} fontSize={'10px'} pb={4} pt={2}>
 					{paymentId}
@@ -52,7 +53,9 @@ function Ticket(props) {
 					</chakra.span>
 				</chakra.p>
 			</Flex>
-			<QRCode value={paymentId} />
+			<Flex margin="auto">
+				<QRCode value={paymentId} />
+			</Flex>
 		</Flex>
 	);
 }
@@ -69,6 +72,7 @@ export default function TicketsGrid() {
 				.then(({ success, data, error }) => {
 					if (success) {
 						//console.log('data', data);
+						console.log(data);
 						setTickets(data);
 					} else {
 						console.log('error', error);
@@ -98,13 +102,13 @@ export default function TicketsGrid() {
 				direction={'column'}
 				width={'full'}
 			>
-				<Box width={{ base: 'full', sm: 'lg', lg: 'xl' }} margin={'auto'}>
+				<Box width={'full'} margin={'auto'}>
 					<chakra.h1 py={5} fontSize={48} fontWeight={'bold'}>
 						Meus Tickets
 					</chakra.h1>
 				</Box>
 				<SimpleGrid
-					columns={{ base: 1, xl: 2 }}
+					columns={1}
 					spacing={'7'}
 					mx={'auto'}
 					mb={'var(--navigation-bar-height)'}

@@ -12,7 +12,7 @@ async function dbConnection() {
 	});
 
 	// console.log('connected?', db.connections[0].readyState);
-	connection.isConnected = db.connections[0].readyState;
+	connection.isConnected = db.connections && db.connections[0].readyState;
 }
 
 export default dbConnection;
