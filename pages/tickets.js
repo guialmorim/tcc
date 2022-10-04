@@ -60,19 +60,29 @@ function Ticket(props) {
 	);
 }
 
-export default function TicketsGrid() {
+export default function TicketsGrid({ host }) {
 	const { user } = useUserAuth();
+	console.log('Host: ', host);
 	const [tickets, setTickets] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	function configRequestBaseUrl(host) {
+		if (host.includes('localhost')) {
+			return `http://${host}`;
+		} else {
+			return `https://${host}`;
+		}
+	}
+
 	useEffect(() => {
 		if (user) {
-			const endpoint = `http://localhost:3000/api/tickets/${user.email}`;
+			const endpoint = `${configRequestBaseUrl(host)}/api/tickets/${
+				user.email
+			}`;
 			fetcher(endpoint)
 				.then(({ success, data, error }) => {
 					if (success) {
 						//console.log('data', data);
-						console.log(data);
 						setTickets(data);
 					} else {
 						console.log('error', error);
@@ -146,3 +156,12 @@ export default function TicketsGrid() {
 		</Container>
 	);
 }
+
+TicketsGrid.getInitialProps = async (context) => {
+	const { req, query, res, asPath, pathname } = context;
+	if (req) {
+		console.log(req.headers);
+		const host = req.headers.host;
+		return { host };
+	}
+};
