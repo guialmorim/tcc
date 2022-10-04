@@ -66,19 +66,19 @@ export default function TicketsGrid({ host }) {
 	const [tickets, setTickets] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	function configRequestBaseUrl(host) {
-		if (host.includes('localhost')) {
-			return `http://${host}`;
-		} else {
-			return `https://${host}`;
+	function configRequestBaseUrl() {
+		const env = process.env.NODE_ENV;
+		if (env == 'development') {
+			return 'http://localhost:3000';
+		} else if (env == 'production') {
+			return 'https://tcc-steel.vercel.app';
 		}
 	}
 
 	useEffect(() => {
 		if (user) {
-			const endpoint = `${configRequestBaseUrl(host)}/api/tickets/${
-				user.email
-			}`;
+			const endpoint = `${configRequestBaseUrl()}/api/tickets/${user.email}`;
+			console.log('endpoint', endpoint);
 			fetcher(endpoint)
 				.then(({ success, data, error }) => {
 					if (success) {
@@ -156,12 +156,3 @@ export default function TicketsGrid({ host }) {
 		</Container>
 	);
 }
-
-TicketsGrid.getInitialProps = async (context) => {
-	const { req, query, res, asPath, pathname } = context;
-	if (req) {
-		console.log(req.headers);
-		const host = req.headers.host;
-		return { host };
-	}
-};

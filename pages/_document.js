@@ -5,13 +5,13 @@ export default class MyDocument extends Document {
 		return (
 			<Html lang="en">
 				<Head>
-					<meta name="application-name" content="Tcc" />
+					<meta name="application-name" content="Parker" />
 					<meta name="apple-mobile-web-app-capable" content="yes" />
 					<meta
 						name="apple-mobile-web-app-status-bar-style"
 						content="default"
 					/>
-					<meta name="apple-mobile-web-app-title" content="Tcc" />
+					<meta name="apple-mobile-web-app-title" content="Parker" />
 					<meta name="description" content="Trabalho de Conclusão de Curso" />
 					<meta name="format-detection" content="telephone=no" />
 					<meta name="mobile-web-app-capable" content="yes" />
@@ -23,37 +23,15 @@ export default class MyDocument extends Document {
 					<meta name="msapplication-tap-highlight" content="no" />
 					<meta name="theme-color" content="#000000" />
 
-					<link rel="apple-touch-icon" href="/icons/favicon.png" />
-					<link
-						rel="apple-touch-icon"
-						sizes="152x152"
-						href="/icons/favicon.png"
-					/>
-					<link
-						rel="apple-touch-icon"
-						sizes="180x180"
-						href="/icons/favicon.png"
-					/>
-					<link
-						rel="apple-touch-icon"
-						sizes="167x167"
-						href="/icons/favicon.png"
-					/>
+					<link rel="apple-touch-icon" href="/favicon.ico" />
+					<link rel="apple-touch-icon" sizes="152x152" href="/favicon.ico" />
+					<link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico" />
+					<link rel="apple-touch-icon" sizes="167x167" href="/favicon.ico" />
 
-					<link
-						rel="icon"
-						type="image/png"
-						sizes="32x32"
-						href="/icons/favicon.png"
-					/>
-					<link
-						rel="icon"
-						type="image/png"
-						sizes="16x16"
-						href="/icons/favicon.png"
-					/>
+					<link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico" />
+					<link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
 					<link rel="manifest" href="/static/manifest.json" />
-					<link rel="mask-icon" href="/icons/favicon.png" color="#5bbad5" />
+					<link rel="mask-icon" href="/favicon.ico" color="#5bbad5" />
 					<link rel="shortcut icon" href="/favicon.ico" />
 					<link
 						rel="stylesheet"
@@ -62,22 +40,22 @@ export default class MyDocument extends Document {
 
 					<meta name="twitter:card" content="summary" />
 					<meta name="twitter:url" content="https://tcc-steel.vercel.app" />
-					<meta name="twitter:title" content="Tcc" />
+					<meta name="twitter:title" content="Parker" />
 					<meta
 						name="twitter:description"
-						content="Tcc - Seu cardápio web interativo!"
+						content="Parker - Your Parking Helper!"
 					/>
 					<meta
 						name="twitter:image"
 						content="https://tcc-steel.vercel.app/static/icons/android-chrome-192x192.png"
 					/>
 					<meta property="og:type" content="website" />
-					<meta property="og:title" content="Tcc" />
+					<meta property="og:title" content="Parker" />
 					<meta
 						property="og:description"
-						content="Tcc - Seu cardápio web interativo!"
+						content="Parker - Your Parking Helper!"
 					/>
-					<meta property="og:site_name" content="Tcc" />
+					<meta property="og:site_name" content="Parker" />
 					<meta property="og:url" content="https://tcc-steel.vercel.app" />
 					<meta
 						property="og:image"
