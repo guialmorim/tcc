@@ -35,6 +35,27 @@ export default async function handler(req, res) {
 			}
 			break;
 
+		case 'PUT':
+			try {
+				const { ticketId } = body;
+
+				const filter = { _id: ticketId };
+				const update = { used: true };
+
+				console.log(filter);
+				console.log(update);
+
+				let updatedTicket = await Ticket.findOneAndUpdate(filter, update, {
+					new: true,
+				});
+
+				res.status(200).json({ success: true, data: updatedTicket });
+			} catch (error) {
+				console.error(error);
+				res.status(500).json({ success: false, error: error });
+			}
+			break;
+
 		default:
 			break;
 	}

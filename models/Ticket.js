@@ -11,6 +11,7 @@ const TicketSchema = new mongoose.Schema({
 	},
 	paymentId: String,
 	userId: String,
+	used: Boolean,
 });
 
 const Ticket = mongoose.models.Ticket || mongoose.model('Ticket', TicketSchema);

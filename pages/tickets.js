@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
 	Box,
 	chakra,
@@ -11,14 +12,60 @@ import {
 	Heading,
 	Text,
 	Button,
+	Badge,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { Toast } from '../utils/toast';
 import { WarningTwoIcon, RepeatClockIcon } from '@chakra-ui/icons';
 import { fetcher } from '../lib/utils';
 import QRCode from 'react-qr-code';
 import { useUserAuth } from '../contexts/UserAuthContext';
 
+function configRequestBaseUrl() {
+	const env = process.env.NODE_ENV;
+	if (env == 'development') {
+		return 'http://localhost:3000';
+	} else if (env == 'production') {
+		return 'https://tcc-steel.vercel.app';
+	}
+}
+
 function Ticket(props) {
-	const { createdAt, expirationDate, paymentId, _id } = props;
+	const router = useRouter();
+
+	const { createdAt, expirationDate, paymentId, _id, used } = props;
+
+	function isInThePast(date) {
+		const today = new Date();
+
+		return date < today;
+	}
+
+	function setTicketUsed(ticketId) {
+		const endpoint = `${configRequestBaseUrl()}/api/tickets`;
+		console.log('endpoint', endpoint);
+
+		axios
+			.put(endpoint, {
+				ticketId,
+			})
+			.then(function (response) {
+				const { status } = response;
+
+				if (status === 200) {
+					Toast({
+						title: 'Ok!',
+						description: 'Ticket validado com sucesso',
+						status: 'success',
+					});
+					router.push('/');
+				}
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}
+
 	return (
 		<Flex
 			key={_id}
@@ -39,6 +86,24 @@ function Ticket(props) {
 			>
 				<chakra.p fontWeight={'medium'} fontSize={'10px'} pb={4} pt={2}>
 					{paymentId}
+				</chakra.p>
+				<chakra.p fontWeight={'medium'} fontSize={'15px'} pb={4} pt={2}>
+					{!used && isInThePast(new Date(expirationDate)) && (
+						<Badge colorScheme="red">Ticket Expirado</Badge>
+					)}
+
+					{used && <Badge colorScheme="purple">Ticket Utilizado</Badge>}
+
+					{!used && !isInThePast(new Date(expirationDate)) && (
+						<Button
+							onClick={() => setTicketUsed(_id)}
+							colorScheme="purple"
+							size="xs"
+							variant="outline"
+						>
+							Utilizar Ticket
+						</Button>
+					)}
 				</chakra.p>
 				<chakra.p fontWeight={'bold'} fontSize={14}>
 					Data da compra:
@@ -65,15 +130,6 @@ export default function TicketsGrid({ host }) {
 	console.log('Host: ', host);
 	const [tickets, setTickets] = useState([]);
 	const [loading, setLoading] = useState(true);
-
-	function configRequestBaseUrl() {
-		const env = process.env.NODE_ENV;
-		if (env == 'development') {
-			return 'http://localhost:3000';
-		} else if (env == 'production') {
-			return 'https://tcc-steel.vercel.app';
-		}
-	}
 
 	useEffect(() => {
 		if (user) {
