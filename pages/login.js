@@ -34,16 +34,17 @@ function Login() {
 									zIndex: -1,
 								}}
 							>
-								Parker
+								Estacionaki!
 							</Text>
 							<br />{' '}
 							<Text color={'blue.400'} as={'span'}>
-								Your Parking Helper!
+								Encontre sua vaga no estacionamento
 							</Text>{' '}
 						</Heading>
 						<Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-							The project board is an exclusive resource for contract work. It
-							{"'"}s perfect for freelancers, agencies, and moonlighters.
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+							vehicula accumsan sapien, eu interdum purus ultricies et.
+							Curabitur venenatis non arcu id molestie.
 						</Text>
 						<Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
 							<Button
@@ -54,7 +55,7 @@ function Login() {
 								leftIcon={<FcGoogle />}
 							>
 								<Center>
-									<Text>Sign in with Google</Text>
+									<Text>Login com o Google</Text>
 								</Center>
 							</Button>
 						</Stack>

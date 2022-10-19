@@ -100,12 +100,24 @@ function PopUp({ onClosePopup, parking }) {
 				/>
 
 				<Box p={3}>
+					<Box d="flex" alignItems="baseline" my={2}>
+						<Badge rounded="full" px="2" fontSize="1.1em" colorScheme="gray">
+							{formatCurrency(parking.price)}
+						</Badge>
+					</Box>
 					<Box d="flex" alignItems="baseline">
-						{true && (
-							<Badge rounded="full" px="2" fontSize="1.1em" colorScheme="gray">
-								{formatCurrency(parking.price)}
-							</Badge>
-						)}
+						<Badge
+							rounded="full"
+							px="2"
+							fontSize="1em"
+							colorScheme="red"
+							mr={2}
+						>
+							vagas: {parking.maxSpots}
+						</Badge>
+						<Badge rounded="full" px="2" fontSize="1em" colorScheme="green">
+							disponível: {parking.currentSpots}
+						</Badge>
 					</Box>
 					<Flex mt="1" justifyContent="space-between" alignContent="center">
 						<Box

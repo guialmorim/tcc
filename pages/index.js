@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
+import AutoComplete from 'react-google-autocomplete';
 import Map from './components/Map';
 import NoGeolocation from './components/NoGeolocation';
 //import { Toast } from '../utils/toast';
 
-export default function Home() {
+export async function getStaticProps() {
+	console.log('Google Api Key', process.env.GOOGLE_MAPS_API_KEY);
+	console.log('MONGO_URI', process.env.MONGO_URI);
+
+	return {
+		props: { googleApiKey: process.env.GOOGLE_MAPS_API_KEY },
+	};
+}
+
+export default function Home({ googleApiKey }) {
 	const [error, setError] = useState(null);
 	//const [loading, setLoading] = useState(false);
+
 	const [userLocation, setUserLocation] = useState({
 		latitude: null,
 		longitude: null,
@@ -81,6 +92,10 @@ export default function Home() {
 
 	return (
 		<Wrapper>
+			{/* <AutoComplete
+				apiKey={googleApiKey}
+				onPlaceSelected={(place) => console.log(place)}
+			/> */}
 			{userLocation.latitude && userLocation.longitude ? (
 				<Map userLocation={userLocation} />
 			) : (

@@ -11,7 +11,9 @@
 		"rating": 2.5,
 		"numReviews": 30,
 		"price": 1500,
-		"currency": "BRL"
+		"currency": "BRL",
+		"maxSpots": 80,
+		"currentSpots": 7
 	},
 	{
 		"sku": "prod_LnbyRs0kFT7FEg",
@@ -25,7 +27,9 @@
 		"rating": 3.0,
 		"numReviews": 50,
 		"price": 2500,
-		"currency": "BRL"
+		"currency": "BRL",
+		"maxSpots": 50,
+		"currentSpots": 5
 	},
 	{
 		"sku": "prod_Lnbz7bXWSmxx7n",
@@ -39,6 +43,8 @@
 		"rating": 4.2,
 		"numReviews": 20,
 		"price": 3500,
-		"currency": "BRL"
+		"currency": "BRL",
+		"maxSpots": 20,
+		"currentSpots": 15
 	}
 ]

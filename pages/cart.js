@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useShoppingCart } from 'use-shopping-cart';
 import axios from 'axios';
-import { formatCurrency } from '../../lib/utils';
-import getStripe from '../../lib/get-stripe';
+import { formatCurrency } from '../lib/utils';
+import getStripe from '../lib/get-stripe';
 import { AddIcon, MinusIcon, DeleteIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import {
